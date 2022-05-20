@@ -1,0 +1,28 @@
+@mixin flex-column($gap) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+$gap-common: 20px;
+
+.wrapp {
+  @include flex-column($gap-common);
+  min-width: 80vw;
+  margin: $gap-common;
+
+  border: 0;
+}
+
+.comment {
+  // margin-top: 10px;
+
+  &__date {
+    color: rgb(182, 182, 182);
+  }
+
+  &__text {
+    color: rgb(80, 80, 80);
+    margin-left: 5px;
+    font-size: 16px;
+  }
+}
