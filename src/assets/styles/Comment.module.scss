@@ -15,7 +15,9 @@ $gap-common: 20px;
 
 .comment {
   // margin-top: 10px;
-
+  &:first-of-type .comment__text {
+    color: cadetblue;
+  }
   &__date {
     color: rgb(182, 182, 182);
   }

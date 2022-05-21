@@ -1,17 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 import moment from "moment";
-
+import useLocalStorage from "../hooks/useLocalStorage";
 import styles from "../assets/styles/Comment.module.scss";
+
 const ListComments = () => {
   const [listComments, setListComments] = useState([]);
   const commentText = useRef(null);
-  useEffect(() => {
-    const comments = JSON.parse(localStorage.getItem("comments")) || [];
-    setListComments(comments);
-  }, []);
+  const [listCommentsStorage, setListCommentsStorage] = useLocalStorage(
+    "comments",
+    []
+  );
 
-  //   console.log("список комментариев");
+  useEffect(() => {
+    setListCommentsStorage(listComments);
+  }, [listComments]);
+  useEffect(() => {
+    setListComments(listCommentsStorage);
+  }, []);
 
   const handleClick = () => {
     const comm = {
@@ -24,7 +30,6 @@ const ListComments = () => {
     console.log(newList);
     setListComments(newList);
     commentText.current.value = "";
-    localStorage.setItem("comments", JSON.stringify(newList));
   };
   return (
     <>
@@ -38,7 +43,9 @@ const ListComments = () => {
         {listComments.length > 0 ? (
           listComments.map((comment) => {
             return (
-              <div className={styles.comment} key={comment.date}>
+              <div
+                className={styles.comment}
+                key={moment(comment.date).valueOf()}>
                 <Moment
                   format="DD.MM.YYYY HH:mm"
                   className={styles.comment__date}>
